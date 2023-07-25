@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.navBar{
+    background-color: #a0a0f9;
+    height: 70px;
+    width: 100vw;
+}
+
+.imageContainer{
+    display: flex;
+    align-items: center;
+}
+
+#img{
+    margin: 0.2rem;
+    padding: 0.1rem;
+    width: 4rem;
+    height: 4rem;
+    cursor: pointer;
+}
+
+#text{
+    font-weight: bold;
+    margin: 0.2rem;
+    font-size: larger;
+    cursor: pointer;
+
+}

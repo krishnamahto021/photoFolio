@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+.header {
+    margin: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn{
+    border: 2px solid #07f;
+    border-radius: 5px;
+    color: rgba(0, 119, 255, 0.937);
+    cursor: pointer;
+    font-weight: 900;
+    outline: none;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+#addAlbum {
+    background-color: rgba(0, 119, 255, .1);
+}
+
+#clearAlbum{
+    background-color: rgba(255,19,0,.1);
+    border: 2px solid #ff1300;
+    color: #ff1300;
+}
+
+.grid {
+    margin-left: 5rem;
+    grid-gap: 50px;
+    display: grid;
+    grid-auto-flow: row;
+    grid-auto-rows: 150px;
+    margin-bottom: 100px;
+    grid-template-columns: repeat(5,15%);
+
+}

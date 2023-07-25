@@ -1,13 +1,16 @@
 import { db } from "./firebaseinit";
 import { NavBar } from "./components/NavBar/NavBar";
+import { AlbumList } from "./components/Album/AlbumList/AlbumList";
 
 function App() {
-  console.log(db);
   return (
+    <>
     <div className="App">
     <NavBar/>
+    <AlbumList/>
 
     </div>
+    </>
   );
 }
 

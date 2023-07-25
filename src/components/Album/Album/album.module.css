@@ -1,0 +1,36 @@
+.album{
+    align-items: center;
+    border: 5px solid #eee;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: flex-end;
+    transition: border-color .3s;
+    width: 100%;
+    &:hover {
+        border-color: blue;
+      }
+    &:hover span{
+        background-color: blue;
+    }
+}
+
+.title{
+    background-color: #eee;
+    font-size: 1.1rem;
+    font-weight: 700;
+    justify-self: baseline;
+    padding-block: 5px;
+    text-align: center;
+    transition: .3s;
+    width: 100%;
+
+}
+
+#gallery{
+    margin-bottom: 30px;
+    width: 50px;
+}

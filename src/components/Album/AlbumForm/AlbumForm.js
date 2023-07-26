@@ -1,20 +1,27 @@
 import { useState } from 'react';
-import styles from './albumForm.module.css'
-export const AlbumForm = () => {
-    const [title, setTitle] = useState('');
+import styles from './albumForm.module.css';
+
+export const AlbumForm = (props) => {
+    const { title, setTitle } = props;
+    const [form, setForm] = useState('');
+
     function clearInput(e) {
         e.preventDefault();
-        setTitle('');
+        setForm('');
     }
 
     function handleChange(e) {
-        setTitle(e.target.value);
+        setForm(e.target.value);
     }
 
-    function submitHandler(e){
+    async function submitHandler(e) {
         e.preventDefault();
-        setTitle(e.target.value);
-        console.log(title);
+
+        // Update the title state in the parent component
+        setTitle([form,...title]);
+
+
+        clearInput(e);
     }
 
     return (
@@ -23,14 +30,12 @@ export const AlbumForm = () => {
                 <span className={styles.title}>Create an Album</span>
                 <div className={styles.form}>
                     <form onSubmit={submitHandler}>
-                        <input type="text" placeholder="Album Name" value={title} onChange={handleChange} required />
-                        <button className={styles.clearButton}  onClick={clearInput}>Clear</button>
+                        <input type="text" placeholder="Album Name" value={form} onChange={handleChange} required />
+                        <button className={styles.clearButton} onClick={clearInput}>Clear</button>
                         <button className={styles.createButton} type='submit'>Create</button>
                     </form>
                 </div>
-
             </div>
         </>
     )
-
 }

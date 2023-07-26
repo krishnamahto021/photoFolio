@@ -1,28 +1,54 @@
-import { useState } from 'react';
+import { useRef} from 'react';
 import styles from './albumForm.module.css';
 
+
+
 export const AlbumForm = (props) => {
-    const { title, setTitle } = props;
-    const [form, setForm] = useState('');
+    // const { title, setTitle } = props;
+    // const [form, setForm] = useState('');
 
-    function clearInput(e) {
+    // function clearInput(e) {
+    //     e.preventDefault();
+    //     setForm('');
+    // }
+
+    // function handleChange(e) {
+    //     setForm(e.target.value);
+    // }
+
+    // async function submitHandler(e) {
+    //     e.preventDefault();
+    //     setTitle([form,...title]);
+    //     // set into the database
+    //     const docRef = doc(collection(db,'photofolio'));
+    //     await setDoc(docRef,{
+    //         title:form
+    //     });
+  
+    //     clearInput(e);
+    // }
+    const {addTitle} = props;
+
+    const titleTextInput = useRef();
+
+    const submitHandler = (e) => {
         e.preventDefault();
-        setForm('');
+        const titleText = titleTextInput.current.value;
+        const text ={
+            title:titleText
+        }
+        addTitle(text);
+        clearInput();
+        return;
     }
 
-    function handleChange(e) {
-        setForm(e.target.value);
+    const clearInput =() =>{
+        titleTextInput.current.value='';
     }
 
-    async function submitHandler(e) {
-        e.preventDefault();
-
-        // Update the title state in the parent component
-        setTitle([form,...title]);
 
 
-        clearInput(e);
-    }
+
 
     return (
         <>
@@ -30,7 +56,8 @@ export const AlbumForm = (props) => {
                 <span className={styles.title}>Create an Album</span>
                 <div className={styles.form}>
                     <form onSubmit={submitHandler}>
-                        <input type="text" placeholder="Album Name" value={form} onChange={handleChange} required />
+                        <input type="text" placeholder="Album Name" 
+                        ref={titleTextInput}required />
                         <button className={styles.clearButton} onClick={clearInput}>Clear</button>
                         <button className={styles.createButton} type='submit'>Create</button>
                     </form>

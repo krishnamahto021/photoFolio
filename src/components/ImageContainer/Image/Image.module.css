@@ -1,57 +1,23 @@
-.container{
-    background-color: #f4f4f4;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px 0 rgba(99,99,99,.2);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 50px auto 30px;
-    padding: 20px;
-    width: 50vw;
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
 }
 
-.title{
-    font-size: 1.7rem;
-    font-weight: 700;
-}
-
-input{
-    border: 3px solid transparent;
-    border-radius: 30px;
-    font-size: 1.2rem;
-    font-weight: 300;
-    outline: none;
-    padding: 10px 10px 10px 15px;
-    transition: .3s;
-    width: 60%;
-}
-
-.clearButton{
-    background-color: #ff1300;
-    border: none;
-    border-radius: 7px;
-    box-shadow: 0 3px 8px rgba(0,0,0,.24);
-    color: #fff;
+.imageContainer {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px 0 rgba(99, 99, 99, .2);
+    box-sizing: border-box;
     cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: 600;
-    outline: none;
-    padding-block: 7px;
-    width: 100px;
-    margin-left:4rem;
+    height: 100%;
+    padding: 10px;
+    position: relative;
+    width: 100%;
 }
 
-.createButton{
-    background-color: #07f;
-    border: none;
-    border-radius: 7px;
-    box-shadow: 0 3px 8px rgba(0,0,0,.24);
-    color: #fff;
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: 600;
-    outline: none;
-    padding-block: 7px;
-    width: 100px;
-    margin-left:4rem;
+.image {
+    height: 80%;
+    object-fit: cover;
+    width: 100%;
 }

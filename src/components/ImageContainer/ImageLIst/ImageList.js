@@ -4,14 +4,18 @@ import back from '../../../assets/back.png';
 import search from '../../../assets/search.png';
 import clear from '../../../assets/clear.png';
 import { Link } from "react-router-dom";
+import { Image } from "../Image/Image";
 
 
 export const ImageList = (props) => {
-    const { showForm, setShowForm} = props;
+    const { showForm, setShowForm, images ,loading} = props;
     const [searchForm, setSearchForm] = useState(false);
+
     const toggleForm = () => {
         setShowForm(!showForm);
     }
+
+
 
     const toggleSearch = () => {
         setSearchForm(!searchForm);
@@ -32,10 +36,6 @@ export const ImageList = (props) => {
                     <div className={styles.search}>
                         {searchForm ? <input type="text" placeholder="Search...." id={styles.searchInput} required /> : null}
                         {!searchForm ? <img src={search} alt="Search" className={styles.img} onClick={toggleSearch} /> : <img src={clear} alt="clear" className={styles.img} onClick={toggleSearch} />}
-
-
-
-
                     </div>
 
                     <button onClick={toggleForm} className={styles.btn} id={showForm ? styles.clearImage : styles.addImage}>{showForm ? 'Cancel' : 'Add Image'}</button>
@@ -44,8 +44,18 @@ export const ImageList = (props) => {
                 </div>
 
                 <div className={styles.imageList}>
-
+                    {/* Conditionally render content based on loading state */}
+                    {loading ? (
+                        <p>Loading...</p>
+                    ) : images.length === 0 ? (
+                        <p>No images found.</p>
+                    ) : (
+                        images.map((image) => (
+                            <Image key={image.id} title={image.title} imageUrl={image.url} />
+                        ))
+                    )}
                 </div>
+                
 
             </div>
 

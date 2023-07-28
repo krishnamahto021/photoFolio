@@ -15,7 +15,6 @@ export const AlbumList = (props) => {
     }
 
     function handleAlbumClick(albumid){
-        console.log('hey');
         setSelectedAlbum(albumid);
     }
     

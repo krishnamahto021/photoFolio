@@ -2,10 +2,11 @@ import { NavBar } from "./components/NavBar/NavBar";
 import { AlbumList } from "./components/Album/AlbumList/AlbumList";
 import { useEffect, useReducer, useState } from "react";
 import { db } from "./firebaseinit";
-import { addDoc, arrayUnion, collection, onSnapshot, updateDoc } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, onSnapshot, updateDoc,doc } from "firebase/firestore";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ImageList } from "./components/ImageContainer/ImageLIst/ImageList";
 import { ImageForm } from "./components/ImageContainer/ImageForm/ImageForm";
+
 
 const reducer = (state, action) => {
   const { payload } = action;
@@ -14,13 +15,7 @@ const reducer = (state, action) => {
       return {
         titles: payload.titles
       }
-    }
-
-    // case 'ADD': {
-    //   return {
-    //     titles: [payload.title, ...state.titles]
-    //   }
-    // }
+    } 
 
     case 'ADD_ALBUM':{
       return{
@@ -28,20 +23,6 @@ const reducer = (state, action) => {
       }
     }
 
-    // case 'ADD_IMAGE_TO_ALBUM': {
-    //   const updatedTitles = state.titles.map(album => {
-    //     if (album.id === payload.albumId) {
-    //       return {
-    //         ...album,
-    //         images: [...album.images, payload.imageId]
-    //       };
-    //     }
-    //     return album;
-    //   });
-    //   return {
-    //     titles: updatedTitles
-    //   };
-    // }
 
 
     default:
@@ -54,7 +35,6 @@ function App() {
   const [showForm, setShowForm] = useState(false);
   const [imageToAlbum,imageToAlbumDispatch] = useReducer(reducer,{});
   const [selectedAlbum,setSelectedAlbum] = useState(null);
-  console.log(selectedAlbum);
 
   const getTitle = async () => {
     const unsub = onSnapshot(collection(db, 'photofolio'), (snapshot) => {
@@ -94,48 +74,32 @@ function App() {
     }
   };
 
-  // const addImageToAlbum = async(title,imageUrl,albumId) =>{
-  //   try{
-  //     // add image document
-  //     const imageRef = await addDoc(collection(db,'images'),{
-  //       title:title,
-  //       url:imageUrl,
-  //       albumRef:db.collection('photofolio').doc(albumId)
-  //     });
-
-  //     // update the images array in the album document
-  //     const albumDocRef = collection(db,'photofolio').doc(albumId);
-  //     await updateDoc(albumDocRef,{
-  //       images:arrayUnion(imageRef)
-  //     });
-
-  //     imageToAlbumDispatch({
-  //       type:'ADD_IMAGE_TO_ALBUM',
-  //       payload:{
-  //         albumId:albumId,
-  //         imageId:imageRef.id
-  //       }
-  //     })
+  const addImage = async(data) =>{
+    const {title,url} = data;
+    const imageRef = await addDoc(collection(db,'images'),{title,url});
+    // update the imagesArray in the selectedAlbum
+    if(selectedAlbum){
+      const albumDocRef = doc(db,'photofolio',selectedAlbum);
+      await updateDoc(albumDocRef,{
+        imagesArray:arrayUnion(imageRef)
+      })
+    }
+  }
 
 
-
-  //   }catch(err){
-  //     console.error('Error in adding image to album',err);
-  //   }
-  // }
 
   const router = createBrowserRouter([
     {
       path: '/', element: <>
         <NavBar />
-        <AlbumList addAlbum={addAlbum} titles={state.titles} selectedAlbum={setSelectedAlbum} />
+        <AlbumList addAlbum={addAlbum} titles={state.titles} setSelectedAlbum={setSelectedAlbum} />
       </>
     },
     {
       path: '/image-list', element: <>
         <NavBar />
-        {showForm ? <ImageForm  selectedAlbum={selectedAlbum} /> : null}
-        <ImageList showForm={showForm} setShowForm={setShowForm} />
+        {showForm ? <ImageForm  selectedAlbum={selectedAlbum} addImage={addImage} /> : null}
+        <ImageList showForm={showForm} setShowForm={setShowForm} addImage={addImage} />
       </>
     }
 

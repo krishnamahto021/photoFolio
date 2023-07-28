@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import styles from './ImageForm.module.css';
 export const ImageForm = (props) => {
-    const {addImageToAlbum} = props;
+    const {addImage} = props;
     const titleTextInput = useRef();
     const urlInput = useRef();
 
@@ -18,7 +18,7 @@ export const ImageForm = (props) => {
             title:titleText,
             url:imageUrl
         }
-        addImageToAlbum(data);
+        addImage(data);
         clearInput();
         return;
     }

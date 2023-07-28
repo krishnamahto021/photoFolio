@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 
 export const ImageList = (props) => {
-    const { showForm, setShowForm } = props;
+    const { showForm, setShowForm} = props;
     const [searchForm, setSearchForm] = useState(false);
     const toggleForm = () => {
         setShowForm(!showForm);

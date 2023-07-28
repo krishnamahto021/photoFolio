@@ -4,17 +4,18 @@ import styles from './albumForm.module.css';
 
 
 export const AlbumForm = (props) => {
-    const {addTitle} = props;
+    const {addAlbum} = props;
 
     const titleTextInput = useRef();
 
     const submitHandler = (e) => {
         e.preventDefault();
         const titleText = titleTextInput.current.value;
-        const text ={
-            title:titleText
+        const data ={
+            title:titleText,
+            imagesArray:[]
         }
-        addTitle(text);
+        addAlbum(data);
         clearInput();
         return;
     }

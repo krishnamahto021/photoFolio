@@ -4,29 +4,6 @@ import styles from './albumForm.module.css';
 
 
 export const AlbumForm = (props) => {
-    // const { title, setTitle } = props;
-    // const [form, setForm] = useState('');
-
-    // function clearInput(e) {
-    //     e.preventDefault();
-    //     setForm('');
-    // }
-
-    // function handleChange(e) {
-    //     setForm(e.target.value);
-    // }
-
-    // async function submitHandler(e) {
-    //     e.preventDefault();
-    //     setTitle([form,...title]);
-    //     // set into the database
-    //     const docRef = doc(collection(db,'photofolio'));
-    //     await setDoc(docRef,{
-    //         title:form
-    //     });
-  
-    //     clearInput(e);
-    // }
     const {addTitle} = props;
 
     const titleTextInput = useRef();
@@ -45,11 +22,6 @@ export const AlbumForm = (props) => {
     const clearInput =() =>{
         titleTextInput.current.value='';
     }
-
-
-
-
-
     return (
         <>
             <div className={styles.container}>

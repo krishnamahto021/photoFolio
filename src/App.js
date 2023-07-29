@@ -34,6 +34,7 @@ function App() {
   const [state, dispatch] = useReducer(reducer, { titles: [] });
   const [showForm, setShowForm] = useState(false);
   const [selectedAlbum, setSelectedAlbum] = useState(null);
+  const [selectedAlbumTitle,setSelectedAlbumTitle] = useState('');
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -116,14 +117,14 @@ function App() {
     {
       path: '/', element: <>
         <NavBar />
-        <AlbumList addAlbum={addAlbum} titles={state.titles} setSelectedAlbum={setSelectedAlbum} />
+        <AlbumList addAlbum={addAlbum} titles={state.titles} setSelectedAlbum={setSelectedAlbum} setSelectedAlbumTitle={setSelectedAlbumTitle} />
       </>
     },
     {
       path: '/image-list', element: <>
         <NavBar />
-        {showForm ? <ImageForm selectedAlbum={selectedAlbum} addImage={addImage} /> : null}
-        <ImageList showForm={showForm} setShowForm={setShowForm} addImage={addImage} images={images} loading={loading} />
+        {showForm ? <ImageForm selectedAlbum={selectedAlbum} addImage={addImage} title={selectedAlbumTitle} /> : null}
+        <ImageList showForm={showForm}  setShowForm={setShowForm} addImage={addImage} images={images} loading={loading} title={selectedAlbumTitle} />
       </>
     }
 

@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 export const AlbumList = (props) => {
     const [showForm, setShowForm] = useState(false);   
-    const {addAlbum,titles,setSelectedAlbum} = props; 
+    const {addAlbum,titles,setSelectedAlbum,setSelectedAlbumTitle} = props; 
     
 
     function toggleForm(e) {
@@ -14,8 +14,9 @@ export const AlbumList = (props) => {
         setShowForm(!showForm);
     }
 
-    function handleAlbumClick(albumid){
-        setSelectedAlbum(albumid);
+    function handleAlbumClick(album){
+        setSelectedAlbum(album.id);
+        setSelectedAlbumTitle(album.title);        
     }
     
     return (
@@ -29,7 +30,7 @@ export const AlbumList = (props) => {
             {
                 titles.map((single,i)=>{
                     return(
-                    <Album title={single.title} key={i} onClick={()=>handleAlbumClick(single.id)}
+                    <Album title={single.title} key={i} onClick={()=>handleAlbumClick(single)} 
                     />
                     );
                 })

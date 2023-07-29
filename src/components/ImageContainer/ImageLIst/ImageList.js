@@ -8,14 +8,12 @@ import { Image } from "../Image/Image";
 
 
 export const ImageList = (props) => {
-    const { showForm, setShowForm, images ,loading} = props;
+    const { showForm, setShowForm, images ,loading,title} = props;
     const [searchForm, setSearchForm] = useState(false);
 
     const toggleForm = () => {
         setShowForm(!showForm);
     }
-
-
 
     const toggleSearch = () => {
         setSearchForm(!searchForm);
@@ -32,7 +30,7 @@ export const ImageList = (props) => {
                         <img src={back} alt="back" className={styles.img} />
                     </span></Link>
 
-                    <h3>something</h3>
+                    <h3 className={styles.text}>{images.length === 0 ? 'No images found in the album':`Images in ${title}`}</h3>
                     <div className={styles.search}>
                         {searchForm ? <input type="text" placeholder="Search...." id={styles.searchInput} required /> : null}
                         {!searchForm ? <img src={search} alt="Search" className={styles.img} onClick={toggleSearch} /> : <img src={clear} alt="clear" className={styles.img} onClick={toggleSearch} />}
@@ -47,8 +45,6 @@ export const ImageList = (props) => {
                     {/* Conditionally render content based on loading state */}
                     {loading ? (
                         <p>Loading...</p>
-                    ) : images.length === 0 ? (
-                        <p>No images found.</p>
                     ) : (
                         images.map((image) => (
                             <Image key={image.id} title={image.title} imageUrl={image.url} />

@@ -16,6 +16,8 @@
     margin-block: 30px;
 }
 
+
+
 .back {
     align-items: center;
     aspect-ratio: 1;
@@ -32,6 +34,11 @@
 .img{
     width: 30px;
     cursor: pointer;
+}
+
+.text{
+    font-size: 1.7rem;
+    font-weight: 700;
 }
 
 .search {

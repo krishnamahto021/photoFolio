@@ -21,3 +21,35 @@
     object-fit: cover;
     width: 100%;
 }
+.update{
+    border: none;
+    display: none;
+    outline: none;
+    position: absolute;
+    right: 25px;
+    top: -15px;
+    transition: .3s;
+
+}
+
+.delete {
+    border: none;
+    display: none;
+    outline: none;
+    position: absolute;
+    right: -15px;
+    top: -15px;
+    transition: .3s;
+}
+
+.imageContainer:hover .update{
+    display: block;
+}
+
+.imageContainer:hover .delete{
+    display: block;
+}
+
+.icon{
+    width: 35px;
+}

@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import styles from './ImageForm.module.css';
 export const ImageForm = (props) => {
-    const {addImage} = props;
+    const {addImage,title} = props;
     const titleTextInput = useRef();
     const urlInput = useRef();
 
@@ -25,7 +25,7 @@ export const ImageForm = (props) => {
     return (
         <>
             <div className={styles.container}>
-                <span className={styles.title}>Add image to Album </span>
+                <span className={styles.title}>Add image to {title} </span>
                     <form className={styles.form} onSubmit={submitHandler}>
                         <input type="text" placeholder="Title"
                              required ref={titleTextInput} />

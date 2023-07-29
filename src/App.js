@@ -2,7 +2,7 @@ import { NavBar } from "./components/NavBar/NavBar";
 import { AlbumList } from "./components/Album/AlbumList/AlbumList";
 import { useEffect, useReducer, useState } from "react";
 import { db } from "./firebaseinit";
-import { addDoc, arrayUnion, collection, onSnapshot, updateDoc, doc, query, where } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, onSnapshot, updateDoc, doc, query, where, deleteDoc, arrayRemove } from "firebase/firestore";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ImageList } from "./components/ImageContainer/ImageLIst/ImageList";
 import { ImageForm } from "./components/ImageContainer/ImageForm/ImageForm";
@@ -111,6 +111,22 @@ function App() {
     }
   }
 
+  const deleteImage = async(imageId)=>{
+    try{
+      await deleteDoc(doc(db,'images',imageId));
+
+      // update the imagesArray field in album
+      if(selectedAlbum){
+        const albumDocRef = doc(db,'photofolio',selectedAlbum);
+        await updateDoc(albumDocRef,{
+          imagesArray:arrayRemove(doc(db,'images',imageId))
+        });
+      }
+    }catch(err){
+      console.error('Error in deleting the images',err);
+    }
+  }
+
 
 
   const router = createBrowserRouter([
@@ -124,7 +140,7 @@ function App() {
       path: '/image-list', element: <>
         <NavBar />
         {showForm ? <ImageForm selectedAlbum={selectedAlbum} addImage={addImage} title={selectedAlbumTitle} /> : null}
-        <ImageList showForm={showForm}  setShowForm={setShowForm} addImage={addImage} images={images} loading={loading} title={selectedAlbumTitle} />
+        <ImageList showForm={showForm}  setShowForm={setShowForm} addImage={addImage} images={images} loading={loading} title={selectedAlbumTitle} deleteImage={deleteImage} />
       </>
     }
 

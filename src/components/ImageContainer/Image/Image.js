@@ -6,7 +6,7 @@ import { useState } from 'react';
 import FullScreenImage from '../FullScreenImage/FullScreenImage';
 
 export const Image = (props)=>{
-    const {title,imageUrl,imagesArray,index} = props;
+    const {title,imageUrl,imagesArray,index,deleteImage} = props;
     const defaultUrl = warning;
     const [isFullScreenOpen,setFullScreenOpen] = useState(false);
     const [clickedImageIndex,setClickedImageIndex] = useState(null);
@@ -31,7 +31,7 @@ export const Image = (props)=>{
                 <img src={edit} alt='edit' className={styles.icon} />
             </div>
             <div className={styles.delete}>
-                <img src={trashBin} alt="delete" className={styles.icon} />
+                <img src={trashBin} alt="delete" className={styles.icon} onClick={deleteImage} />
             </div>
 
             <img src={imageUrl} alt={title} className={styles.image} onError={handleImageError} onClick={handleImageClick}/>

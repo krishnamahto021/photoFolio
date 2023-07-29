@@ -1,0 +1,81 @@
+.fullScreenContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+  }
+  
+  .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: white;
+    border: none;
+    color: black;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    font-weight: 800;
+    font-size: 1.6rem;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px 10px;
+    &:hover{
+      background-color: red;
+      color: white;
+    }
+  }
+  
+  .imageContainer {
+    position: relative;
+  }
+  
+  .fullScreenImage {
+    width: 90%;
+    max-height: 80vh;
+  }
+  
+  .leftButton,
+  .rightButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    aspect-ratio: 1;
+    font-weight: 800;
+    transition: 0.3s;
+    width: 60px;
+    &:hover{
+      background-color: blue;
+      color: white;
+    }
+  }
+  
+  .rightButton {
+    right: 10px;
+  }
+  
+  .leftButton {
+    left: 10px;
+  }
+
+
+  

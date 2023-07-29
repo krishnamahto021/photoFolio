@@ -46,8 +46,8 @@ export const ImageList = (props) => {
                     {loading ? (
                         <p>Loading...</p>
                     ) : (
-                        images.map((image) => (
-                            <Image key={image.id} title={image.title} imageUrl={image.url} />
+                        images.map((image,i) => (
+                            <Image key={image.id} title={image.title} imageUrl={image.url} imagesArray={images} index={i}/>
                         ))
                     )}
                 </div>

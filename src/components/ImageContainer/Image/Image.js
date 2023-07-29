@@ -4,9 +4,10 @@ import edit from '../../../assets/edit.png';
 import trashBin from '../../../assets/trash-bin.png';
 import { useState } from 'react';
 import FullScreenImage from '../FullScreenImage/FullScreenImage';
+import { useEffect } from 'react';
 
 export const Image = (props)=>{
-    const {title,imageUrl,imagesArray,index,deleteImage} = props;
+    const {title,imageUrl,imagesArray,index,deleteImage,addImage,setShowForm,editImage,setEditImage} = props;
     const defaultUrl = warning;
     const [isFullScreenOpen,setFullScreenOpen] = useState(false);
     const [clickedImageIndex,setClickedImageIndex] = useState(null);
@@ -24,11 +25,23 @@ export const Image = (props)=>{
         setFullScreenOpen(false);
     }
 
+    const handleEditImage = () => {
+        setShowForm(true); 
+        const imageToEdit = imagesArray[index];
+        setEditImage({
+            id:imageToEdit.id,
+            title:imageToEdit.title,
+            url:imageToEdit.url
+        });
+        addImage(imageToEdit);
+    }
+
+
     return(
         <>
             <div className={styles.imageContainer} >
             <div className={styles.update}>
-                <img src={edit} alt='edit' className={styles.icon} />
+                <img src={edit} alt='edit' className={styles.icon} onClick={handleEditImage} />
             </div>
             <div className={styles.delete}>
                 <img src={trashBin} alt="delete" className={styles.icon} onClick={deleteImage} />

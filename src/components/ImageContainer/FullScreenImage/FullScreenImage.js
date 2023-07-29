@@ -19,7 +19,6 @@ const FullScreenImage = (props) => {
         onClose();
     };
 
-    console.log(images[currentIndex].url);
 
     if(!isVisible) return null;
 

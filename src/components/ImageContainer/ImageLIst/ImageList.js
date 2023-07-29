@@ -8,7 +8,7 @@ import { Image } from "../Image/Image";
 
 
 export const ImageList = (props) => {
-    const { showForm, setShowForm, images ,loading,title,deleteImage} = props;
+    const { showForm, setShowForm, images ,loading,title,deleteImage,addImage,setEditImage} = props;
     const [searchForm, setSearchForm] = useState(false);
 
     const toggleForm = () => {
@@ -18,7 +18,6 @@ export const ImageList = (props) => {
     const toggleSearch = () => {
         setSearchForm(!searchForm);
     }
-
 
     return (
         <>
@@ -47,7 +46,7 @@ export const ImageList = (props) => {
                         <p>Loading...</p>
                     ) : (
                         images.map((image,i) => (
-                            <Image key={image.id} title={image.title} imageUrl={image.url} imagesArray={images} index={i} deleteImage={()=>deleteImage(image.id)} />
+                            <Image key={image.id} title={image.title} imageUrl={image.url} imagesArray={images} index={i} setShowForm={setShowForm} deleteImage={()=>deleteImage(image.id)} addImage={addImage} setEditImage={setEditImage} showForm={showForm}/>
                         ))
                     )}
                 </div>

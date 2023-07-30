@@ -27,12 +27,12 @@ export const Image = (props)=>{
     const handleEditImage = () => {
         setShowForm(true); 
         const imageToEdit = imagesArray[index];
+        console.log(imageToEdit);
         setEditImage({
             id:imageToEdit.id,
             title:imageToEdit.title,
             url:imageToEdit.url
         });
-        addImage(imageToEdit);
     }
 
 

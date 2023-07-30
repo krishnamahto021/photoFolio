@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import styles from './ImageForm.module.css';
 export const ImageForm = (props) => {
-    const { addImage, title, editImage } = props;
+    const { addImage, title, editImage,updateImage } = props;
     const titleTextInput = useRef();
     const urlInput = useRef();
 
@@ -18,7 +18,11 @@ export const ImageForm = (props) => {
             title: titleText,
             url: imageUrl
         };
-        addImage(data);
+        if(editImage){
+            updateImage(data);
+        }else{
+            addImage(data);
+        }
         clearInput();
         return;
     }

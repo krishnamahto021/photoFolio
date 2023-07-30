@@ -100,36 +100,52 @@ function App() {
   const addImage = async (data) => {
     const { title, url } = data;
     const albumRef = selectedAlbum;
-  
-    if (editImage) {
-      // Update the existing image in Firestore
-      await updateDoc(doc(db, "images", editImage.id), {
-        title,
-        url,
-        albumRef,
-      });
-  
-      // Update the images state using functional update to avoid making copies
-      setImages((prevImages) =>
-        prevImages.map((image) =>
-          image.id === editImage.id ? { ...image, title, url } : image
-        )
-      );
-  
-      // Reset edit image and image form
-      setEditImage(null);
-      setShowForm(false);
-    } else {
-      // Add a new image to Firestore
-      const imageRef = await addDoc(collection(db, "images"), { title, url, albumRef });
-  
-      // Update the images state using functional update to avoid making copies
-      // setImages((prevImages) => [{ title, url, albumRef, id: imageRef.id }, ...prevImages]);
-      setImages([{title,url,albumRef},...images]); 
+    // Add a new image to Firestore
+    const imageRef = await addDoc(collection(db, "images"), { title, url, albumRef });
 
-    }
+    // Update the images state using functional update to avoid making copies
+    // setImages((prevImages) => [{ title, url, albumRef, id: imageRef.id }, ...prevImages]);
+    setImages([{ title, url, albumRef }, ...images]);
+
+    // setting into the album
+    const albumDocRef = doc(db, 'photofolio', selectedAlbum);
+    await updateDoc(albumDocRef, {
+      imagesArray: arrayUnion(imageRef)
+    })
+
   };
-  
+
+  const updateImage = async (data) => {
+    const { title, url } = data;
+    const albumRef = selectedAlbum;
+    // Update the existing image in Firestore
+    console.log(editImage);
+    await updateDoc(doc(db, "images", editImage.id), {
+      title,
+      url,
+      albumRef,
+    });
+
+    // Update the images state using functional update to avoid making copies
+    setImages((prevImages) =>
+      prevImages.map((image) =>
+        image.id === editImage.id ? { ...image, title, url } : image
+      )
+    );
+
+    const albumDocRef = doc(db, 'photofolio', selectedAlbum);
+    const imageRef = doc(db, 'images', editImage.id);
+    await updateDoc(albumDocRef, {
+      imagesArray: arrayUnion(imageRef)
+    })
+
+
+    // Reset edit image and image form
+    setEditImage(null);
+    setShowForm(false);
+
+  }
+
 
   const deleteImage = async (imageId) => {
     try {
@@ -157,7 +173,7 @@ function App() {
     {
       path: '/image-list', element: <>
         <NavBar />
-        {showForm ? <ImageForm selectedAlbum={selectedAlbum} addImage={addImage} title={selectedAlbumTitle} editImage={editImage} /> : null}
+        {showForm ? <ImageForm selectedAlbum={selectedAlbum} addImage={addImage} title={selectedAlbumTitle} editImage={editImage} updateImage={updateImage} /> : null}
         <ImageList showForm={showForm} setShowForm={setShowForm} addImage={addImage} images={images} loading={loading} title={selectedAlbumTitle} deleteImage={deleteImage} setEditImage={setEditImage} editImage={editImage} />
       </>
     }

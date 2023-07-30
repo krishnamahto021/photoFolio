@@ -7,54 +7,103 @@ import { Link } from "react-router-dom";
 import { Image } from "../Image/Image";
 
 
-export const ImageList = (props) => {
-    const { showForm, setShowForm, images ,loading,title,deleteImage,addImage,setEditImage} = props;
-    const [searchForm, setSearchForm] = useState(false);
+// export const ImageList = (props) => {
+//     const { showForm, setShowForm, images ,loading,title,deleteImage,addImage,setEditImage} = props;
+//     console.log(images);
+//     const [searchForm, setSearchForm] = useState(false);
 
-    const toggleForm = () => {
-        setShowForm(!showForm);
-    }
+//     const toggleForm = () => {
+//         setShowForm(!showForm);
+//     }
 
-    const toggleSearch = () => {
-        setSearchForm(!searchForm);
-    }
+//     const toggleSearch = () => {
+//         setSearchForm(!searchForm);
+//     }
 
-    return (
-        <>
-
-
-            <div className={styles.container}>
-                <div className={styles.top}>
-                    <Link to='/'><span className={styles.back}>
-                        <img src={back} alt="back" className={styles.img} />
-                    </span></Link>
-
-                    <h3 className={styles.text}>{images.length === 0 ? 'No images found in the album':`Images in ${title}`}</h3>
-                    <div className={styles.search}>
-                        {searchForm ? <input type="text" placeholder="Search...." id={styles.searchInput} required /> : null}
-                        {!searchForm ? <img src={search} alt="Search" className={styles.img} onClick={toggleSearch} /> : <img src={clear} alt="clear" className={styles.img} onClick={toggleSearch} />}
-                    </div>
-
-                    <button onClick={toggleForm} className={styles.btn} id={showForm ? styles.clearImage : styles.addImage}>{showForm ? 'Cancel' : 'Add Image'}</button>
+//     return (
+//         <>
 
 
-                </div>
+//             <div className={styles.container}>
+//                 <div className={styles.top}>
+//                     <Link to='/'><span className={styles.back}>
+//                         <img src={back} alt="back" className={styles.img} />
+//                     </span></Link>
 
-                <div className={styles.imageList}>
-                    {/* Conditionally render content based on loading state */}
-                    {loading ? (
-                        <p>Loading...</p>
-                    ) : (
-                        images.map((image,i) => (
-                            <Image key={image.id} title={image.title} imageUrl={image.url} imagesArray={images} index={i} setShowForm={setShowForm} deleteImage={()=>deleteImage(image.id)} addImage={addImage} setEditImage={setEditImage} showForm={showForm}/>
-                        ))
-                    )}
-                </div>
+//                     <h3 className={styles.text}>{ images.length === 0 ? 'No images found in the album':`Images in ${title}`}</h3>
+//                     <div className={styles.search}>
+//                         {searchForm ? <input type="text" placeholder="Search...." id={styles.searchInput} required /> : null}
+//                         {!searchForm ? <img src={search} alt="Search" className={styles.img} onClick={toggleSearch} /> : <img src={clear} alt="clear" className={styles.img} onClick={toggleSearch} />}
+//                     </div>
+
+//                     <button onClick={toggleForm} className={styles.btn} id={showForm ? styles.clearImage : styles.addImage}>{showForm ? 'Cancel' : 'Add Image'}</button>
+
+
+//                 </div>
+
+//                 <div className={styles.imageList}>
+//                     {/* Conditionally render content based on loading state */}
+//                     {loading ? (
+//                         <p>Loading...</p>
+//                     ) : (
+//                         images.map((image,i) => (
+//                             <Image key={image.id} title={image.title} imageUrl={image.url} imagesArray={images} index={i} setShowForm={setShowForm} deleteImage={()=>deleteImage(image.id)} addImage={addImage} setEditImage={setEditImage} showForm={showForm}/>
+//                         ))
+//                     )}
+//                 </div>
                 
 
+//             </div>
+
+
+//         </>
+//     )
+// }
+
+export const ImageList = (props) => {
+    const { showForm, setShowForm, images, loading, title, deleteImage, addImage, setEditImage } = props;
+    console.log(images);
+    const [searchForm, setSearchForm] = useState(false);
+  
+    const toggleForm = () => {
+      setShowForm(!showForm);
+    }
+  
+    const toggleSearch = () => {
+      setSearchForm(!searchForm);
+    }
+  
+    return (
+      <>
+        <div className={styles.container}>
+          <div className={styles.top}>
+            <Link to='/'><span className={styles.back}>
+              <img src={back} alt="back" className={styles.img} />
+            </span></Link>
+  
+            <h3 className={styles.text}>{loading ? 'Loading...' : (images && images.length === 0) ? 'No images found in the album' : `Images in ${title}`}</h3>
+            <div className={styles.search}>
+              {searchForm ? <input type="text" placeholder="Search...." id={styles.searchInput} required /> : null}
+              {!searchForm ? <img src={search} alt="Search" className={styles.img} onClick={toggleSearch} /> : <img src={clear} alt="clear" className={styles.img} onClick={toggleSearch} />}
             </div>
-
-
-        </>
+  
+            <button onClick={toggleForm} className={styles.btn} id={showForm ? styles.clearImage : styles.addImage}>{showForm ? 'Cancel' : 'Add Image'}</button>
+          </div>
+  
+          <div className={styles.imageList}>
+            {/* Conditionally render content based on loading state and presence of images */}
+            {loading ? (
+              <p>Loading...</p>
+            ) : images && images.length > 0 ? (
+              images.map((image, i) => (
+                <Image key={image.id} title={image.title} imageUrl={image.url} imagesArray={images} index={i} setShowForm={setShowForm} deleteImage={() => deleteImage(image.id)} addImage={addImage} setEditImage={setEditImage} showForm={showForm} />
+              ))
+            ) : (
+              <p>Fetching Images ....</p>
+            )}
+          </div>
+        </div>
+      </>
     )
-}
+  }
+  

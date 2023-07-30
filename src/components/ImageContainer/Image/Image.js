@@ -4,10 +4,9 @@ import edit from '../../../assets/edit.png';
 import trashBin from '../../../assets/trash-bin.png';
 import { useState } from 'react';
 import FullScreenImage from '../FullScreenImage/FullScreenImage';
-import { useEffect } from 'react';
 
 export const Image = (props)=>{
-    const {title,imageUrl,imagesArray,index,deleteImage,addImage,setShowForm,editImage,setEditImage} = props;
+    const {title,imageUrl,imagesArray,index,deleteImage,addImage,setShowForm,setEditImage} = props;
     const defaultUrl = warning;
     const [isFullScreenOpen,setFullScreenOpen] = useState(false);
     const [clickedImageIndex,setClickedImageIndex] = useState(null);

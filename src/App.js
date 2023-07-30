@@ -2,7 +2,7 @@ import { NavBar } from "./components/NavBar/NavBar";
 import { AlbumList } from "./components/Album/AlbumList/AlbumList";
 import { useEffect, useReducer, useState } from "react";
 import { db } from "./firebaseinit";
-import { addDoc, arrayUnion, collection, onSnapshot, updateDoc, doc, query, where, deleteDoc, arrayRemove } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, onSnapshot, updateDoc, doc, query, where, deleteDoc, arrayRemove, setDoc } from "firebase/firestore";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ImageList } from "./components/ImageContainer/ImageLIst/ImageList";
 import { ImageForm } from "./components/ImageContainer/ImageForm/ImageForm";
@@ -73,9 +73,6 @@ function App() {
     const unsubscribe = fetchImagesForAlbum();
   }, [selectedAlbum]);
 
-
-
-
   const addAlbum = async (album) => {
     try {
       const albumRef = collection(db, 'photofolio');
@@ -99,71 +96,39 @@ function App() {
     }
   };
 
+
   const addImage = async (data) => {
     const { title, url } = data;
     const albumRef = selectedAlbum;
+  
     if (editImage) {
-      await updateDoc(doc(db,'images',editImage.id),{
+      // Update the existing image in Firestore
+      await updateDoc(doc(db, "images", editImage.id), {
         title,
         url,
-        albumRef
+        albumRef,
       });
-      
-      setImages((prevImages)=>{
-        prevImages.map((image)=>
-          image.id === editImage.id ? {...image,title,url}:image
+  
+      // Update the images state using functional update to avoid making copies
+      setImages((prevImages) =>
+        prevImages.map((image) =>
+          image.id === editImage.id ? { ...image, title, url } : image
         )
-      });
-      //reset edit image and image form
+      );
+  
+      // Reset edit image and image form
       setEditImage(null);
       setShowForm(false);
-
     } else {
-      const imageRef = await addDoc(collection(db, 'images'), { title, url, albumRef });
-      // update the imagesArray in the selectedAlbum
-      if (selectedAlbum) {
-        const albumDocRef = doc(db, 'photofolio', selectedAlbum);
-        await updateDoc(albumDocRef, {
-          imagesArray: arrayUnion(imageRef)
-        })
-      }
+      // Add a new image to Firestore
+      const imageRef = await addDoc(collection(db, "images"), { title, url, albumRef });
+  
+      // Update the images state using functional update to avoid making copies
+      // setImages((prevImages) => [{ title, url, albumRef, id: imageRef.id }, ...prevImages]);
+      setImages([{title,url,albumRef},...images]); 
 
     }
-  }
-  // const addImage = async (data) => {
-  //   const { title, url } = data;
-  //   const albumRef = selectedAlbum;
-  //   if (editImage) {
-  //     await updateDoc(doc(db,'images',editImage.id), {
-  //       title,
-  //       url,
-  //       albumRef
-  //     });
-  
-  //     // Update the images state with the edited image
-  //     setImages((prevImages) =>
-  //       prevImages.map((image) =>
-  //         image.id === editImage.id ? { ...image, title, url } : image
-  //       )
-  //     );
-  
-  //     // Reset edit image and image form
-  //     setEditImage(null);
-  //     setShowForm(false);
-  //   } else {
-  //     const imageRef = await addDoc(collection(db, 'images'), { title, url, albumRef });
-      
-  //     // update the imagesArray in the selectedAlbum
-  //     if (selectedAlbum) {
-  //       const albumDocRef = doc(db, 'photofolio', selectedAlbum);
-  //       await updateDoc(albumDocRef, {
-  //         imagesArray: arrayUnion(imageRef)
-  //       });
-  //     }
-  //   }
-  // }
-
-
+  };
   
 
   const deleteImage = async (imageId) => {

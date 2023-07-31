@@ -7,6 +7,11 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ImageList } from "./components/ImageContainer/ImageLIst/ImageList";
 import { ImageForm } from "./components/ImageContainer/ImageForm/ImageForm";
 
+// react toasts to show notifications
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 const reducer = (state, action) => {
   const { payload } = action;
@@ -82,6 +87,7 @@ function App() {
         type: 'ADD_ALBUM',
         payload: { album: { id: docRef.id, ...album } }
       });
+      toast.success('Album Added successfully');
 
       // Get the current state of titles
       const currentTitles = state.titles;
@@ -93,6 +99,7 @@ function App() {
       dispatch({ type: 'GET', payload: { titles: updatedTitles } });
     } catch (err) {
       console.error('Error in adding album', err);
+      toast.error('Error in creating Album');
     }
   };
 
@@ -112,6 +119,8 @@ function App() {
     await updateDoc(albumDocRef, {
       imagesArray: arrayUnion(imageRef)
     })
+
+    toast.success('Image Added successfully');
 
   };
 
@@ -137,7 +146,9 @@ function App() {
     const imageRef = doc(db, 'images', editImage.id);
     await updateDoc(albumDocRef, {
       imagesArray: arrayUnion(imageRef)
-    })
+    });
+
+    toast.success('Image Updated Successfully');
 
 
     // Reset edit image and image form
@@ -158,8 +169,10 @@ function App() {
           imagesArray: arrayRemove(doc(db, 'images', imageId))
         });
       }
+      toast.success('Image deleted successfully');
     } catch (err) {
       console.error('Error in deleting the images', err);
+      toast.error('error in deleting image');
     }
   }
 
@@ -184,6 +197,7 @@ function App() {
 
     <>
       <div className="App">
+        <ToastContainer />
         <RouterProvider router={router} />
       </div>
     </>
